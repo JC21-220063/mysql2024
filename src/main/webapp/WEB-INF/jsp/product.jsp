@@ -13,8 +13,8 @@
 %>
 
 <body>
-<FORM METHOD="GET" ACTION="./result1">
-<SELECT NAME="ID">
+<FORM METHOD="GET" ACTION="./item">
+<SELECT NAME="MAKER_CODE">
 
 <% for (String[] ss : result) { %>
 		<OPTION VALUE="<%= ss[1] %>">
@@ -22,8 +22,27 @@
 		</OPTION>
 <% } %>
 
+
 </SELECT>
 <INPUT TYPE="SUBMIT" VALUE="絞り込む"/>
+
+<%
+	ArrayList<String[]> result1 =
+		(ArrayList<String[]>) request.getAttribute("result1");
+%>
+
+<table>
+
+<% for (String[] ss1 : result1) { %>
+	<tr>
+		<th><%= ss1[0] %></th>
+		<th><%= ss1[1] %></th>
+		<th><%= ss1[2] %></th>
+	<tr>
+<% } %>
+
+</table>
+
 </FORM>
 </body>
 </html>
