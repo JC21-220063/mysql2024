@@ -59,7 +59,6 @@ public class ProductServlet extends HttpServlet {
 			String MAKER_CODE = request.getParameter("MAKER_CODE");
 			if(MAKER_CODE == null) {
 				// ↓全件表示したい
-				//３つ目をメーカーネーム
 				String sql1 ="SELECT A.PRODUCT_CODE, A.PRODUCT_NAME, B.MAKER_NAME FROM PRODUCT A INNER JOIN MAKER B ON A.MAKER_CODE = B.MAKER_CODE";
 				
 				PreparedStatement statement1 = conn.prepareStatement(sql1);
@@ -80,7 +79,7 @@ public class ProductServlet extends HttpServlet {
 				
 				// ↓絞り込みしたい
 				
-				String sql2 ="SELECT PRODUCT_CODE, PRODUCT_NAME, MAKER_CODE FROM PRODUCT" + " Where MAKER_CODE = ?";
+				String sql2 ="SELECT A.PRODUCT_CODE, A.PRODUCT_NAME, B.MAKER_NAME FROM PRODUCT A INNER JOIN MAKER B ON A.MAKER_CODE = B.MAKER_CODE" + " Where B.MAKER_CODE = ?";
 				
 				PreparedStatement statement2 = conn.prepareStatement(sql2);
 
@@ -90,17 +89,14 @@ public class ProductServlet extends HttpServlet {
 				ArrayList<String[]> result2 = new ArrayList<>();
 				while(rs2.next()==true) {
 					String[] s2 = new String[3];
-					s2[0]=rs2.getString("PRODUCT_CODE");
-					s2[1]=rs2.getString("PRODUCT_NAME");
-					s2[2]=rs2.getString("MAKER_CODE");
+					s2[0]=rs2.getString("A.PRODUCT_CODE");
+					s2[1]=rs2.getString("A.PRODUCT_NAME");
+					s2[2]=rs2.getString("B.MAKER_NAME");
 					result2.add(s2);
 				}
 				
 				request.setAttribute("result1", result2);
 			}
-			
-
-
 			
 			
 			RequestDispatcher rd =
